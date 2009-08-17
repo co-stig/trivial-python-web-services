@@ -62,9 +62,13 @@ class UrlCallableFunction (object):
 					del params[arg]
 				
 				# Check if all mandatory arguments were supplied
-				def_count = len(inspect.getargspec(self.func).defaults)
-				mand_count = len(real_args) - def_count
-				mand_args = real_args[:mand_count]
+				defs = inspect.getargspec(self.func).defaults
+				if defs:
+					def_count = len(defs)
+					mand_count = len(real_args) - def_count
+					mand_args = real_args[:mand_count]
+				else:
+					mand_args = real_args
 				for arg in mand_args:
 					if arg not in params:
 						return {'status': 400}				
@@ -84,9 +88,11 @@ class Controller (object):
 		additional_params['method'] = req.method
 		additional_params['headers'] = req.headers
 		
+		found = False
 		for handler in UrlCallableFunction.request_handlers:
 			result = handler.call_if_matches (url, additional_params)
 			if result: 
+				found = True
 				if isinstance (result, str):
 					res.body = result
 				elif isinstance (result, dict):
@@ -97,6 +103,9 @@ class Controller (object):
 					if 'status' in result: res.status = result['status']
 				break
 		
+		if not found:
+			res.status = 400
+			
 		return res (env, start_response)
 
 # Decorator for request handlers
