@@ -17,9 +17,10 @@ def get_user (username):
 def get_plans (username):
 	return "Inside get_plans('%s')" % username
 
-@url_pattern("/users/${username}/plans/${year}")
-def get_plan (username, year, method, param2 = ''):
-	return "Inside get_plan('%s', %s, %s, %s)" % (username, year, method, param2)
+@url_pattern("/users/${username}/plans/${year}", ['GET'])
+def get_plan (username, method, year = 2008, param2 = ''):
+	return {'body': "Inside get_plan('%s', %s, %s, %s)" % (username, year, method, param2), 'status': 201, 'content_type': 'text/plain', 'charset': 'UTF-8', 'additional_headers': {'aaaa': 's'}}
+#	return "Inside get_plan('%s', %s, %s, %s)" % (username, year, method, param2)
 
 
 #make_server('localhost', 8051, Controller()).handle_request()
