@@ -57,7 +57,7 @@ class UrlCallableFunction (object):
 				params = dict(zip(self.param_names, match))
 				params.update(additional_params)
 				real_args = inspect.getargspec(self.func).args
-				diff = filter(lambda x: x not in real_args, params.keys())
+				diff = list(filter(lambda x: x not in real_args, params.keys()))
 				for arg in diff:
 					del params[arg]
 				
@@ -94,7 +94,7 @@ class Controller (object):
 			if result: 
 				found = True
 				if isinstance (result, str):
-					res.body = result
+					res.text = result
 				elif isinstance (result, dict):
 					if 'body' in result: res.body = result['body']
 					if 'charset' in result: res.charset = result['charset']
