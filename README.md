@@ -1,6 +1,8 @@
 # Very simple Python RESTful web services #
 
-It's just a single-100-LOC-file (see [vsws.py](https://github.com/co-stig/python-very-simple-web-services/blob/master/vsws.py)), allowing you to create RESTful web services in a very simple manner through a `@url_pattern` decorator. It might be useful for simple projects, prototypes, etc.
+It's just a single-100-LOC-file (see [vsws.py](https://github.com/co-stig/python-very-simple-web-services/blob/master/vsws.py)), allowing you to create RESTful web services in a very simple manner through a `@url_pattern` decorator. It might be useful for simple projects, prototypes, etc. 
+
+Why would you use it? Well, it's just two pages of code, which means it's very light and there are fewer things to go wrong. Also, if you found a bug or want to extend the functionality -- you can do it yourself in the blink of an eye.
 
 Last time I tested this code, I used Python 3.4 on Windows 8.1 64 bit with WebOb 1.4.
 
@@ -81,6 +83,7 @@ In Python 3.4 installing WebOb is as simple as executing `pip install webob`
     1. `headers`
   1. The URL handler can have less parameters than provided by request and extracted using URL pattern. In such case those parameters are not used.
   1. If there exist some mandatory (not having default values) URL handler parameters, which are not supplied during the request (not enough parameters), `400 Bad Request` is returned.
+  1. Trailing slashes in URLs are ignored: `http://localhost/users` is equivalent to `http://localhost/users/`.
   1. You can use several decorators for a single URL handler.
 
 ## Limitations ##
