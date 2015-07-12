@@ -42,7 +42,7 @@ class UrlCallableFunction (object):
 		self.pattern = pattern
 		self.func = func
 		self.param_names = UrlCallableFunction.param_re.findall(pattern)
-		self.re = '^' + UrlCallableFunction.param_re.sub('([^/]+?)', pattern) + '$'
+		self.re = '^' + UrlCallableFunction.param_re.sub('([^/]+?)', pattern) + '\/?$'
 		self.re_compiled = re.compile(self.re)
 		self.methods = methods
 		
@@ -98,7 +98,7 @@ class Controller (object):
 				if isinstance (result, str):
 					res.text = result
 				elif isinstance (result, dict):
-					if 'body' in result: res.body = result['body']
+					if 'body' in result: res.text = result['body']
 					if 'charset' in result: res.charset = result['charset']
 					if 'content_type' in result: res.content_type = result['content_type']
 					if 'additional_headers' in result: res.headers.update(result['additional_headers'])
