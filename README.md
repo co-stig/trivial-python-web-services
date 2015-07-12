@@ -37,7 +37,7 @@ def get_plan (username, year, method, param2 = ''):
 # Uncomment this to line to actually start a server:
 # make_server('localhost', 8051, Controller()).serve_forever()
 
-#print (Request.blank ('/users/john/plans/2009?param1=value1&param2=value2').get_response (Controller()))
+print (Request.blank ('/users/john/plans/2009?param1=value1&param2=value2').get_response (Controller()))
 ```
 
 # Installation and requirements #
