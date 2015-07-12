@@ -6,6 +6,8 @@ Why would you use it? Well, it's just two pages of code, which means it's very l
 
 Last time I tested this code, I used Python 3.4 on Windows 8.1 64 bit with WebOb 1.4.
 
+Sample code:
+
 ```python
 #! /usr/bin/env python
 
