@@ -1,4 +1,11 @@
 #! /usr/bin/env python
+#
+# Trivial Python Web Services sample
+#
+# https://github.com/co-stig/trivial-python-web-services
+#
+# Copyright (C) Constantine Kulak, 2009 -- 2015
+#
 
 from vsws import url_pattern, Controller
 from webob import Request, Response

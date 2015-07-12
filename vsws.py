@@ -1,4 +1,11 @@
 #! /usr/bin/env python
+#
+# Trivial Python Web Services
+#
+# https://github.com/co-stig/trivial-python-web-services
+#
+# Copyright (C) Constantine Kulak, 2009 -- 2015
+#
 
 from webob import Request, Response
 import re
@@ -25,11 +32,6 @@ import inspect
 # content_type
 # additiona_headers
 # status
-
-# done: Return dict / string
-# done: Method as a parameter
-# done: Several URLs
-# done: Error (HTTP 400) if handler has more *required* arguments than supplied
 
 class UrlCallableFunction (object):
 	
