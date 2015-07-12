@@ -1,4 +1,4 @@
-# Introduction #
+# Very simple Python RESTful web services #
 
 It's just a single-100-LOC-file (see [vsws.py](https://github.com/co-stig/python-very-simple-web-services/blob/master/vsws.py)), allowing you to create RESTful web services in a very simple manner through a `@url_pattern` decorator. It might be useful for simple projects, prototypes, etc.
 
