@@ -11,6 +11,7 @@ from vsws import url_pattern, Controller
 from webob import Request, Response
 from wsgiref.simple_server import make_server
 
+# You can specify multiple URL patterns for a single handler and use response object for better control
 @url_pattern("/users")
 @url_pattern("/all_users")
 @url_pattern("/users/${username}/list", ['GET'])
@@ -18,18 +19,23 @@ def get_users (response):
 	response.status = 200
 	return "Inside get_users()"
 
+# Returning a dict corresponding to HTTP resoponse -- less control, but simpler
 @url_pattern("/users/${username}")
 def get_user (username):
 	return {"body": "Inside get_user('%s')" % username, "status": 201}
 
+# Handling both GET and PUT requests and returning a simple string, HTTP 200 is used by default
 @url_pattern("/users/${username}/plans", ['GET', 'PUT'])
 def get_plans (username):
 	return "Inside get_plans('%s'), GET or PUT" % username
 
+# POST request with the same URL pattern can be handled separately
 @url_pattern("/users/${username}/plans", ['POST'])
 def get_plans (username):
 	return "Inside get_plans('%s'), POST" % username
 
+# Here param2 is a request parameter, i.e. /users/john/plans/2015?param2=test
+# method is either GET, POST, PUT or DELETE
 @url_pattern("/users/${username}/plans/${year}")
 def get_plan (username, year, method, param2 = ''):
 	return "Inside get_plan('%s', %s, %s, %s)" % (username, year, method, param2)
@@ -54,7 +60,7 @@ In Python 3.4 installing WebOb is as simple as executing `pip install webob`
   1. Design an URL, including all the necessary parameters: `/users/${username}/plans/${year`}
   1. Create a function, taking the same parameters (`username` and `year` in this case)
   1. Add a decorator for this function: `@url_pattern("/users/${username}/plans/${year}")`
-  1. Use `Controller()` as an WSGI Application: `make_server('localhost', 8051, Controller()).hadle_request()`
+  1. Use `Controller()` as an WSGI Application: `make_server('localhost', 8051, Controller()).serve_forever()`
 
 ## Features ##
 
@@ -67,7 +73,7 @@ In Python 3.4 installing WebOb is as simple as executing `pip install webob`
   1. URL handler decorator has two arguments:
     1. `url_pattern`
     1. `methods = ['GET', 'PUT', 'POST', 'DELETE']`
-  1. Request parameters and those extracted using the URL pattern are handled in the same way.
+  1. Request parameters and those extracted using the URL pattern are handled in the same way, so that you can have handlers like this: `def my_handler (username, age = '')` decorated with `username` as a part of URL: `@url_pattern("/users/${username}")`, and `age` will be taken from the request parameters transparently, e.g. `http://localhost/users/john?age=30`.
   1. There are few additional parameters, also handled in the same way:
     1. `request`: WebOb Request
     1. `response`: WebOb Response
